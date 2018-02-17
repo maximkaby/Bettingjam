@@ -1,18 +1,15 @@
 {
     "manifest_version": 2,
-    "name": "Budget Manager",
+    "name": "Betting jam",
     "version": "1.0",
-    "description": "This extension tracks your spending",
+    "description": "Extension shows live football score.",
     "icons": {
-        "128": "src/icons/icon128.png",
-        "48": "src/icons/icon128.png",
-        "16": "src/icons/icon128.png"
+        "128": "src/icons/128.png",
+        "48": "src/icons/48.png",
+        "16": "src/icons/16.png"
     },
     "browser_action":{
-        "default_icon": "src/icons/icon128.png",
-        "default_popup": "popup.html"
-    },
-    "permissions": [
-        "storage"
-    ]
+        "default_icon": "src/icons/16.png",
+        "default_popup": "index.html"
+    }
 }
