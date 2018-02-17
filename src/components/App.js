@@ -10,9 +10,6 @@ export default class App extends Component {
       <div className="wrapper">
         <Header />
         <Tab />
-        <Match />
-        <Match />
-        <Match />
         <Footer />
       </div>
     );

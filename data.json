@@ -1,0 +1,76 @@
+[
+  {
+    "id": 1,
+    "title": "Category 1",
+    "tasks": [
+      {
+        "idtask":"t1",
+        "title":"To Do 1",
+        "isDone": false,
+        "description": "lalalala"
+      },
+      {
+        "idtask":"t2",
+        "title":"To Do 2",
+        "isDone": false,
+        "description": "lalalala"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Category 2",
+    "tasks": [
+      {
+        "idtask":"t3",
+        "title":"To Do 5",
+        "isDone": false,
+        "description": "wqdwqdqwd"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Category 3",
+    "tasks": [
+      {
+        "idtask":"t4",
+        "title":"To Do 3",
+        "isDone": true,
+        "description": "lalalala"
+      }
+    ],
+    "subCategory": [
+      {
+        "id": 4,
+        "title": "Category 1",
+        "tasks": [
+          {
+            "idtask":"t5",
+            "title":"To Do 1",
+            "isDone": true,
+            "description": "lalalala"
+          },
+          {
+            "idtask":"t6",
+            "title":"To Do 2",
+            "isDone": true,
+            "description": "lalalala"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Category 2",
+        "tasks": [
+          {
+            "idtask":"t7",
+            "title":"To Do 4",
+            "isDone": true,
+            "description": "wqdwqdqwd"
+          }
+        ]
+      }
+    ]
+  }
+]
