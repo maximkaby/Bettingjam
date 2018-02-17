@@ -4,6 +4,10 @@ module.exports = {
         "browser": true,
         "es6": true
       },
+    "plugins":[
+      "class-property"
+    ],
+    "parser":"babel-eslint",
     "rules":{
         "linebreak-style": 0,
         "react/prefer-stateless-function":0,
@@ -19,7 +23,8 @@ module.exports = {
         "react/jsx-filename-extension":0,
         "comma-dangle": 0,
         "func-names":0,
-        "arrow-body-style": 0
+        "arrow-body-style": 0,
+        "react/forbid-prop-types": 0
     },
     "parserOptions": {
         "ecmaVersion": 6,
