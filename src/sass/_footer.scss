@@ -1,0 +1,33 @@
+.footer{
+
+  &__title{
+
+    a {
+      text-decoration: none;
+      color: rgb(47,47,47);
+    }
+
+    .title__powered{
+      font-weight: bold;
+      font-family: 'Kartika',sans-serif;
+      font-style: italic;
+      color: rgb(47,47,47);
+      font-size: 15px;
+      margin-right: 5px;
+    }
+
+    .title__betting{
+      margin-right: 2px;
+      font-family: 'Khmer UI';
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+
+    .title__jam{
+      font-family: 'Lobster';
+      text-transform: lowercase;
+      font-size: 15px;
+    }
+  }
+}
