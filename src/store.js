@@ -35,13 +35,11 @@ const UEFALoadMiddleware = store => next => action => {
       })
       .then((res) => {
         console.log(res);
-        debugger;
         store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
     });
     break;
 
     case 'GET_CURRENT_MATCHDAY':
-      debugger;
       console.log(action);
       fetch(`//api.football-data.org/v1/competitions/${action.payload.id}/fixtures?matchday=${action.payload.matchday}`,{
         headers
@@ -64,7 +62,7 @@ const UEFALoadMiddleware = store => next => action => {
       });  
       Promise.all(promises)
         .then((res) => {
-        store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
+       // store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
       });
       break;
     default:
