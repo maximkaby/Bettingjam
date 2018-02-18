@@ -1,25 +1,25 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
-function appReducer(state = {}, action) {
-  switch (action.type) {
-    case 'SHOW_MATCHES':
-      return 0;
-    default:
-      return state;
-  }
-}
+// function appReducer(state = {}, action) {
+//   switch (action.type) {
+//     case 'SHOW_MATCHES':
+//       return 0;
+//     default:
+//       return state;
+//   }
+// }
 
 function UEFAReducer(state = [], action) {
   switch (action.type) {
     case 'SHOW_UEFA_MATCHES':
-      return action.payload.fixtures;
+      return action.payload;
     default:
       return state;
   }
 }
 /* eslint-disable*/
 const headers = {
-  'X-AUTH-TOKEN': 'dda7045969724a30a0abf9a98b5201a6'
+  'X-AUTH-TOKEN': '03c2904a3f2f4bfcad3ce71c790b1043'
 }
 
 const UEFALoadMiddleware = store => next => action => {
@@ -53,7 +53,16 @@ const UEFALoadMiddleware = store => next => action => {
       });
       break;
     case 'GET_TEAM_LOGOS':
-      console.log(action.payload.fixtures);
+      let promLogo = new Promise((resolve) => {
+        resolve('wefewf')
+      });
+      chrome.storage.sync.get('srcLogo', res => {
+        console.log(res)
+      })
+      console.log('not synchron')
+      
+      // promLogo.then()
+      action.payload.fixtures.length = 0;
       let promises = action.payload.fixtures.map((value) => {             
         return fetch(value._links.homeTeam.href, {
           headers
@@ -62,7 +71,10 @@ const UEFALoadMiddleware = store => next => action => {
       });  
       Promise.all(promises)
         .then((res) => {
-       // store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
+        store.dispatch({ 
+          type: 'SHOW_UEFA_MATCHES', 
+          payload: insertLogosHref(action.payload.fixtures, res) 
+        });
       });
       break;
     default:
@@ -129,6 +141,25 @@ const dataLoadMiddleware = store => next => action => {
   return result;
 };
 
+function insertLogosHref(matches, teams){
+  const myMap = new Map();
+  teams.reduce((myMap, value, index, array) => {
+    myMap.set(value.name, value)
+    return myMap;
+  },myMap);
+
+  return matches.map((value) => {
+    let awayTeam = myMap.get(value.awayTeamName);
+    let homeTeam = myMap.get(value.homeTeamName);
+    return {
+      ...value,
+      awayTeamLogo: awayTeam.crestUrl,
+      awayTeamShortName: awayTeam.shortName,
+      homeTeamLogo: homeTeam.crestUrl,
+      homeTeamShortName: homeTeam.shortName
+    }
+  })
+}
 
 const reducer = combineReducers({
   UEFA: UEFAReducer

@@ -80,7 +80,7 @@ class FullWidthTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            { this.props.matches.map((value, index) => {
+            { this.props.matches.map((value) => {
               return <Match {...value} />;
             }) }
           </TabContainer>
