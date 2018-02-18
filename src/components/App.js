@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import Match from './Match';
 import Tab from './Tab';
 
 export default class App extends Component {
@@ -9,7 +8,7 @@ export default class App extends Component {
     return (
       <div className="wrapper">
         <Header />
-        <Tab />
+        <Tab className="tab" />
         <Footer />
       </div>
     );

@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import { connect } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
+import Match from './Match';
+
 
 function TabContainer({ children, dir }) {
   return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+    <Typography component="div" dir={dir} style={{ padding: 8 * 0 }}>
       {children}
     </Typography>
   );
@@ -19,11 +22,24 @@ TabContainer.propTypes = {
   dir: PropTypes.string.isRequired,
 };
 
-const styles = theme => ({
+const styles = () => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500,
+    backgroundColor: '#e8e6e6',
+    width: '100%',
   },
+  contentHeight: {
+    height: '415px',
+    background: '#e8e6e6',
+  },
+  label: {
+    fontSize: '18px!important',
+    fontFamily: 'Calibri',
+    color: 'rgb(47, 47, 47)',
+    textTransform: 'none'
+  },
+  tab: {
+    backgroundColor: '#e8e6e6'
+  }
 });
 
 class FullWidthTabs extends React.Component {
@@ -41,39 +57,60 @@ class FullWidthTabs extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-
+    console.log(this.props.matches, 'qwe');
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" classes={{ root: classes.root }}>
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
+            indicatorColor="#e50f0f"
+            textColor="secondary"
             fullWidth
           >
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
+            <Tab classes={{ label: classes.label }} label="UEFA Champions League" />
+            <Tab classes={{ label: classes.label }} label="Premier League" />
+            <Tab classes={{ label: classes.label }} label="Championship" />
           </Tabs>
         </AppBar>
         <SwipeableViews
+          className={classes.contentHeight}
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>Item One</TabContainer>
-          <TabContainer dir={theme.direction}>Item Two</TabContainer>
-          <TabContainer dir={theme.direction}>Item Three</TabContainer>
+          <TabContainer dir={theme.direction}>
+            { this.props.matches.map((value, index) => {
+              return <Match {...value} />;
+            }) }
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+           Primier
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            Championship
+          </TabContainer>
         </SwipeableViews>
       </div>
     );
   }
 }
 
+FullWidthTabs.defaultProps = {
+  matches: []
+};
+
 FullWidthTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+function mapStateToProps(state) {
+  return {
+    matches: state.UEFA,
+  };
+}
+
+const UEFATab = withStyles(styles, { withTheme: true })(FullWidthTabs);
+
+export default connect(mapStateToProps)(UEFATab);

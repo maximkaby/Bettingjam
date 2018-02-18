@@ -2,28 +2,37 @@ import React, { Component } from 'react';
 
 export default class Match extends Component {
   render() {
+    const {
+      homeTeamName,
+      awayTeamName = '',
+      result: { goalsHomeTeam, goalsAwayTeam },
+      date,
+      homeTeamLogo = '',
+      awayTeamLogo = ''
+    } = this.props;
+    console.log(this.props);
     return (
       <div className="match">
         <div className="match__team">
           <div className="team__name">
-            <img src="./src/images/mu.jpg" alt="logo" />
-            <div>Man United</div>
+            <img src={homeTeamLogo} alt="logo" />
+            <div>{homeTeamName}</div>
           </div>
           <div className="team__score">
-            2
+            {goalsHomeTeam}
           </div>
         </div>
         <div className="match__team">
           <div className="team__name">
-            <img src="./src/images/mu.jpg" alt="logo" />
-            <div>Man United</div>
+            <img src={awayTeamLogo} alt="logo" />
+            <div>{awayTeamName}</div>
           </div>
           <div className="team__score">
-            3
+            {goalsAwayTeam}
           </div>
         </div>
         <div className="match__date">
-          Yesterday: FT
+          {date}
         </div>
       </div>
     );

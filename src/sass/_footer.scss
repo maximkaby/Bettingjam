@@ -1,4 +1,8 @@
 .footer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 15px 25px 15px 0px;
 
   &__title{
 

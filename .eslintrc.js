@@ -24,7 +24,8 @@ module.exports = {
         "comma-dangle": 0,
         "func-names":0,
         "arrow-body-style": 0,
-        "react/forbid-prop-types": 0
+        "react/forbid-prop-types": 0,
+        "eol-last": 0
     },
     "parserOptions": {
         "ecmaVersion": 6,
