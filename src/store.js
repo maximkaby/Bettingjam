@@ -1,13 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-
-// function appReducer(state = {}, action) {
-//   switch (action.type) {
-//     case 'SHOW_MATCHES':
-//       return 0;
-//     default:
-//       return state;
-//   }
-// }
+import UEFAteams from './data/UEFALeague.js';
+import championshipTeams from './data/championshipLeague.js';
+import primierLeague from './data/premierLeague.js';
 
 function UEFAReducer(state = [], action) {
   switch (action.type) {
@@ -22,11 +16,26 @@ const headers = {
   'X-AUTH-TOKEN': '03c2904a3f2f4bfcad3ce71c790b1043'
 }
 
+const leagues = {
+  UEFA: {
+    id: 464,
+    data: UEFAteams
+  },
+  Premier: {
+    id: 445,
+    data: primierLeague
+  },
+  Championship: {
+    id: 446,
+    data: championshipTeams
+  }
+}
+
 const UEFALoadMiddleware = store => next => action => {
   const result = next(action);
   switch (action.type) {
     case 'LOAD_DATA': 
-      fetch('//api.football-data.org/v1/competitions/464', {
+      fetch(`//api.football-data.org/v1/competitions/${leagues[action.league].id}`, {
         headers
       })
       .then((res) => {
@@ -35,7 +44,14 @@ const UEFALoadMiddleware = store => next => action => {
       })
       .then((res) => {
         console.log(res);
-        store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
+        store.dispatch({ 
+          type: 'GET_CURRENT_MATCHDAY',
+          payload: { 
+            matchday: res.currentMatchday,
+            id: res.id, 
+            league: action.league 
+          }
+        });
     });
     break;
 
@@ -49,33 +65,15 @@ const UEFALoadMiddleware = store => next => action => {
       })
       .then((res) => {
         console.log(res);
-        store.dispatch({ type:'GET_TEAM_LOGOS', payload: res })
+        store.dispatch({ type:'GET_TEAM_LOGOS', payload: res, league: action.payload.league })
       });
       break;
     case 'GET_TEAM_LOGOS':
-      let promLogo = new Promise((resolve) => {
-        resolve('wefewf')
+      store.dispatch({ 
+        type: 'SHOW_UEFA_MATCHES', 
+        payload: insertLogosHref(action.payload.fixtures, leagues[action.league].data) 
       });
-      chrome.storage.sync.get('srcLogo', res => {
-        console.log(res)
-      })
-      console.log('not synchron')
-      
-      // promLogo.then()
-      action.payload.fixtures.length = 0;
-      let promises = action.payload.fixtures.map((value) => {             
-        return fetch(value._links.homeTeam.href, {
-          headers
-        })
-        .then(res => res.json())   
-      });  
-      Promise.all(promises)
-        .then((res) => {
-        store.dispatch({ 
-          type: 'SHOW_UEFA_MATCHES', 
-          payload: insertLogosHref(action.payload.fixtures, res) 
-        });
-      });
+      // });
       break;
     default:
       return store;
@@ -142,15 +140,10 @@ const dataLoadMiddleware = store => next => action => {
 };
 
 function insertLogosHref(matches, teams){
-  const myMap = new Map();
-  teams.reduce((myMap, value, index, array) => {
-    myMap.set(value.name, value)
-    return myMap;
-  },myMap);
-
+  console.log(matches, teams);
   return matches.map((value) => {
-    let awayTeam = myMap.get(value.awayTeamName);
-    let homeTeam = myMap.get(value.homeTeamName);
+    let awayTeam = teams.get(value.awayTeamName);
+    let homeTeam = teams.get(value.homeTeamName);
     return {
       ...value,
       awayTeamLogo: awayTeam.crestUrl,

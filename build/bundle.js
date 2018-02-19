@@ -724,7 +724,7 @@ var withStyles = function withStyles(stylesOrCreator) {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps() {
           // react-hot-loader specific logic
-          if (this.stylesCreatorSaved === stylesCreator || "production " === 'production') {
+          if (this.stylesCreatorSaved === stylesCreator || "development" === 'production') {
             return;
           }
 
@@ -770,7 +770,7 @@ var withStyles = function withStyles(stylesOrCreator) {
             var styles = stylesCreatorSaved.create(theme, name);
             var meta = name;
 
-            if ("production " !== 'production' && !meta) {
+            if ("development" !== 'production' && !meta) {
               meta = (0, _getDisplayName2.default)(Component);
             }
 
@@ -1649,7 +1649,7 @@ var _warning2 = _interopRequireDefault(_warning);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function capitalize(string) {
-  if ("production " !== 'production' && typeof string !== 'string') {
+  if ("development" !== 'production' && typeof string !== 'string') {
     throw new Error('Material-UI: capitalize(string) expects a string argument.');
   }
 
@@ -3722,7 +3722,7 @@ selectorFactory) {
 */
 function isCrushed() {}
 
-if ("production " !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
   Object(__WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
 }
 
@@ -4679,7 +4679,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 var maxRules = 1e10;
 
 
-var env = "production ";
+var env = "development";
 
 /**
  * Returns a function which generates unique class names based on counters.
@@ -5801,7 +5801,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_App__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(344);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sass_main_scss__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sass_main_scss__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sass_main_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__sass_main_scss__);
 
 
@@ -5816,7 +5816,7 @@ __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_App__["a" /* default */], null)
 ), document.getElementById('root'));
 
-__WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */].dispatch({ type: 'LOAD_DATA' });
+__WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */].dispatch({ type: 'LOAD_DATA', league: 'UEFA' });
 
 /***/ }),
 /* 136 */
@@ -23284,7 +23284,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
             'Use `PropTypes.checkPropTypes()` to call them. ' +
             'Read more at http://fb.me/use-check-prop-types'
           );
-        } else if ("production " !== 'production' && typeof console !== 'undefined') {
+        } else if ("development" !== 'production' && typeof console !== 'undefined') {
           // Old behavior for people using React.PropTypes
           var cacheKey = componentName + ':' + propName;
           if (
@@ -24938,9 +24938,20 @@ class FullWidthTabs extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compon
             textColor: 'secondary',
             fullWidth: true
           },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_material_ui_Tabs__["Tab"], { classes: { label: classes.label }, label: 'UEFA Champions League' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_material_ui_Tabs__["Tab"], { classes: { label: classes.label }, label: 'Premier League' }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_material_ui_Tabs__["Tab"], { classes: { label: classes.label }, label: 'Championship' })
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_material_ui_Tabs__["Tab"], {
+            classes: { label: classes.label },
+            label: 'UEFA Champions League'
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_material_ui_Tabs__["Tab"], {
+            classes: { label: classes.label },
+            label: 'Premier League',
+            onClick: this.props.getPremier
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_material_ui_Tabs__["Tab"], {
+            classes: { label: classes.label },
+            label: 'Championship',
+            onClick: this.props.getChampionship
+          })
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -24961,12 +24972,16 @@ class FullWidthTabs extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Compon
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           TabContainer,
           { dir: theme.direction },
-          'Primier'
+          this.props.matches.map(value => {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Match__["a" /* default */], value);
+          })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           TabContainer,
           { dir: theme.direction },
-          'Championship'
+          this.props.matches.map(value => {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Match__["a" /* default */], value);
+          })
         )
       )
     );
@@ -24988,9 +25003,20 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    getPremier() {
+      dispatch({ type: 'LOAD_DATA', league: 'Premier' });
+    },
+    getChampionship() {
+      dispatch({ type: 'LOAD_DATA', league: 'Championship' });
+    }
+  };
+}
+
 const UEFATab = Object(__WEBPACK_IMPORTED_MODULE_2_material_ui_styles__["withStyles"])(styles, { withTheme: true })(FullWidthTabs);
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(mapStateToProps)(UEFATab));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_3_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(UEFATab));
 
 /***/ }),
 /* 177 */
@@ -26688,7 +26714,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var CSS = global.CSS;
 
-var env = "production ";
+var env = "development";
 
 var escapeRegex = /([[\].#*$><+~=|^:(),"'`])/g;
 
@@ -37284,6 +37310,15 @@ exports.default = (0, _withStyles2.default)(styles, { name: 'MuiTypography' })(T
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 
 
+function getCorrectDate(date, goals) {
+  const dayTime = date.split('T');
+  dayTime[1] = dayTime[1].substr(0, 5);
+  if (goals) {
+    dayTime[2] = 'FT';
+  }
+  return dayTime.join(' ');
+}
+
 class Match extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   render() {
     const {
@@ -37297,6 +37332,7 @@ class Match extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       homeTeamShortName = '../src/images/default-team-logo.png'
     } = this.props;
     console.log(this.props);
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: 'match' },
@@ -37341,7 +37377,7 @@ class Match extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'match__date' },
-        date
+        getCorrectDate(date, goalsAwayTeam)
       )
     );
   }
@@ -37355,18 +37391,15 @@ class Match extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_UEFALeague_js__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_championshipLeague_js__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_premierLeague_js__ = __webpack_require__(347);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
 
-// function appReducer(state = {}, action) {
-//   switch (action.type) {
-//     case 'SHOW_MATCHES':
-//       return 0;
-//     default:
-//       return state;
-//   }
-// }
+
+
 
 function UEFAReducer(state = [], action) {
   switch (action.type) {
@@ -37381,18 +37414,40 @@ const headers = {
   'X-AUTH-TOKEN': '03c2904a3f2f4bfcad3ce71c790b1043'
 };
 
+const leagues = {
+  UEFA: {
+    id: 464,
+    data: __WEBPACK_IMPORTED_MODULE_1__data_UEFALeague_js__["a" /* default */]
+  },
+  Premier: {
+    id: 445,
+    data: __WEBPACK_IMPORTED_MODULE_3__data_premierLeague_js__["a" /* default */]
+  },
+  Championship: {
+    id: 446,
+    data: __WEBPACK_IMPORTED_MODULE_2__data_championshipLeague_js__["a" /* default */]
+  }
+};
+
 const UEFALoadMiddleware = store => next => action => {
   const result = next(action);
   switch (action.type) {
     case 'LOAD_DATA':
-      fetch('//api.football-data.org/v1/competitions/464', {
+      fetch(`//api.football-data.org/v1/competitions/${leagues[action.league].id}`, {
         headers
       }).then(res => {
         console.log(12);
         return res.json();
       }).then(res => {
         console.log(res);
-        store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id } });
+        store.dispatch({
+          type: 'GET_CURRENT_MATCHDAY',
+          payload: {
+            matchday: res.currentMatchday,
+            id: res.id,
+            league: action.league
+          }
+        });
       });
       break;
 
@@ -37404,31 +37459,15 @@ const UEFALoadMiddleware = store => next => action => {
         return res.json();
       }).then(res => {
         console.log(res);
-        store.dispatch({ type: 'GET_TEAM_LOGOS', payload: res });
+        store.dispatch({ type: 'GET_TEAM_LOGOS', payload: res, league: action.payload.league });
       });
       break;
     case 'GET_TEAM_LOGOS':
-      let promLogo = new Promise(resolve => {
-        resolve('wefewf');
+      store.dispatch({
+        type: 'SHOW_UEFA_MATCHES',
+        payload: insertLogosHref(action.payload.fixtures, leagues[action.league].data)
       });
-      chrome.storage.sync.get('srcLogo', res => {
-        console.log(res);
-      });
-      console.log('not synchron');
-
-      // promLogo.then()
-      action.payload.fixtures.length = 0;
-      let promises = action.payload.fixtures.map(value => {
-        return fetch(value._links.homeTeam.href, {
-          headers
-        }).then(res => res.json());
-      });
-      Promise.all(promises).then(res => {
-        store.dispatch({
-          type: 'SHOW_UEFA_MATCHES',
-          payload: insertLogosHref(action.payload.fixtures, res)
-        });
-      });
+      // });
       break;
     default:
       return store;
@@ -37487,15 +37526,10 @@ const dataLoadMiddleware = store => next => action => {
 };
 
 function insertLogosHref(matches, teams) {
-  const myMap = new Map();
-  teams.reduce((myMap, value, index, array) => {
-    myMap.set(value.name, value);
-    return myMap;
-  }, myMap);
-
+  console.log(matches, teams);
   return matches.map(value => {
-    let awayTeam = myMap.get(value.awayTeamName);
-    let homeTeam = myMap.get(value.homeTeamName);
+    let awayTeam = teams.get(value.awayTeamName);
+    let homeTeam = teams.get(value.homeTeamName);
     return _extends({}, value, {
       awayTeamLogo: awayTeam.crestUrl,
       awayTeamShortName: awayTeam.shortName,
@@ -37515,10 +37549,281 @@ const store = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* createStore */])
 
 /***/ }),
 /* 345 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const mapTeamInfoUEFA = new Map();
+
+mapTeamInfoUEFA.set('Juventus Turin', {
+  shortName: 'Juventus',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/d/d2/Juventus_Turin.svg'
+});
+mapTeamInfoUEFA.set('FC Basel', {
+  shortName: 'Basel',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/commons/c/c5/FC_Basel.png'
+});
+mapTeamInfoUEFA.set('Real Madrid CF', {
+  shortName: 'Real Madrid',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/3/3f/Real_Madrid_Logo.svg'
+});
+mapTeamInfoUEFA.set('FC Porto', {
+  shortName: 'Porto',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/e/ed/FC_Porto_1922-2005.svg'
+});
+mapTeamInfoUEFA.set('Chelsea FC', {
+  shortName: 'Chelsea',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg'
+});
+mapTeamInfoUEFA.set('FC Bayern München', {
+  shortName: 'Bayern',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/1/1b/FC_Bayern_München_logo_(2017).svg'
+});
+mapTeamInfoUEFA.set('Sevilla FC', {
+  shortName: 'Sevilla',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/en/8/86/Sevilla_cf_200px.png'
+});
+mapTeamInfoUEFA.set('Shakhtar Donetsk', {
+  shortName: 'Shakhtar',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/2/20/FC_Shakhtar_Donetsk.png'
+});
+mapTeamInfoUEFA.set('Liverpool FC', {
+  shortName: 'Liverpool',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg'
+});
+mapTeamInfoUEFA.set('Paris Saint-Germain', {
+  shortName: 'PSG',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/fr/8/86/Paris_Saint-Germain_Logo.svg'
+});
+mapTeamInfoUEFA.set('Tottenham Hotspur FC', {
+  shortName: 'Spurs',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg'
+});
+mapTeamInfoUEFA.set('Manchester City FC', {
+  shortName: 'ManCity',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg'
+});
+mapTeamInfoUEFA.set('AS Roma', {
+  shortName: 'Roma',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/3/32/AS_Rom.svg'
+});
+mapTeamInfoUEFA.set('Manchester United FC', {
+  shortName: 'ManU',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg'
+});
+mapTeamInfoUEFA.set('Besiktas JK', {
+  shortName: 'Besiktas',
+  crestUrl: 'https://tmssl.akamaized.net//images/wappen/head/114.png?lm=1502974502'
+});
+mapTeamInfoUEFA.set('FC Barcelona', {
+  shortName: 'Barcelona',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/a/aa/Fc_barcelona.svg'
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (mapTeamInfoUEFA);
+
+/***/ }),
+/* 346 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const mapTeamInfoChampinshipLeague = new Map();
+
+mapTeamInfoChampinshipLeague.set('Birmingham City', {
+  shortName: 'Birmingham',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/6/68/Birmingham_City_FC_logo.svg'
+});
+mapTeamInfoChampinshipLeague.set('Burton Albion FC', {
+  shortName: 'Burton',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Burton_Albion_FC_logo.svg/847px-Burton_Albion_FC_logo.svg.png'
+});
+mapTeamInfoChampinshipLeague.set('Barnsley FC', {
+  shortName: 'Barnsley',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/c/c9/Barnsley_FC.svg'
+});
+mapTeamInfoChampinshipLeague.set('Brentford FC', {
+  shortName: 'Brentford',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/ru/thumb/1/18/FC_Brentford_Logo.svg/1200px-FC_Brentford_Logo.svg.png'
+});
+mapTeamInfoChampinshipLeague.set('Hull City FC', {
+  shortName: 'Hull',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/20/Hull_City_Crest_2014.svg/130px-Hull_City_Crest_2014.svg.png'
+});
+mapTeamInfoChampinshipLeague.set('Middlesbrough FC', {
+  shortName: 'Middlesbrough',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/2/2c/Middlesbrough_FC_crest.svg'
+});
+mapTeamInfoChampinshipLeague.set('Sheffield Wednesday', {
+  shortName: 'Sheffield',
+  crestUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmixjyN025-R4UFVKTYBzwRY1mK5HM9X44zz2iR4vFz4TARMHr'
+});
+mapTeamInfoChampinshipLeague.set('Millwall FC', {
+  shortName: 'Millwall',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/7/71/Millwall_FC_logo.png'
+});
+//
+mapTeamInfoChampinshipLeague.set('Reading', {
+  shortName: 'Reading',
+  crestUrl: 'https://s5o.ru/storage/simple/ru/edt/92/99/69/28/rue6ad730d45f.jpeg'
+});
+mapTeamInfoChampinshipLeague.set('Nottingham Forest', {
+  shortName: 'Nottingham',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/d/d2/Nottingham_Forest_logo.svg'
+});
+mapTeamInfoChampinshipLeague.set('Queens Park Rangers', {
+  shortName: 'QPR',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/d/d4/Queens_Park_Rangers.svg'
+});
+mapTeamInfoChampinshipLeague.set('Sheffield United FC', {
+  shortName: 'Sheffield',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/9/9c/Sheffield_United_FC_logo.svg'
+});
+mapTeamInfoChampinshipLeague.set('Preston North End', {
+  shortName: 'Preston',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/ru/thumb/a/aa/FC_Preston_North_End_Logo.svg/170px-FC_Preston_North_End_Logo.svg.png'
+});
+mapTeamInfoChampinshipLeague.set('Aston Villa FC', {
+  shortName: 'Aston Villa',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/9/9f/Aston_Villa_logo.svg'
+});
+mapTeamInfoChampinshipLeague.set('Sunderland AFC', {
+  shortName: 'Sunderland',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/6/60/AFC_Sunderland.svg'
+});
+mapTeamInfoChampinshipLeague.set('Bolton Wanderers FC', {
+  shortName: 'Bolton',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/82/Bolton_Wanderers_FC_logo.svg/185px-Bolton_Wanderers_FC_logo.svg.png'
+});
+mapTeamInfoChampinshipLeague.set('Fulham FC', {
+  shortName: 'Fulham',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/a/a8/Fulham_fc.svg'
+});
+mapTeamInfoChampinshipLeague.set('Bristol City', {
+  shortName: 'Bristol',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/ru/thumb/0/00/Bristol_City_FC.svg/180px-Bristol_City_FC.svg.png'
+});
+mapTeamInfoChampinshipLeague.set('Leeds United', {
+  shortName: 'Leeds',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/ru/thumb/8/8d/FC_Leeds_United_Logo.svg/200px-FC_Leeds_United_Logo.svg.png'
+});
+mapTeamInfoChampinshipLeague.set('Derby County', {
+  shortName: 'Derby',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/4/4a/Derby_County_crest.svg'
+});
+mapTeamInfoChampinshipLeague.set('Cardiff City FC', {
+  shortName: 'Cardiff',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/ru/thumb/7/71/Cardiff_City_Crest.jpg/200px-Cardiff_City_Crest.jpg'
+});
+mapTeamInfoChampinshipLeague.set('Ipswich Town', {
+  shortName: 'Ipswich',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/4/43/Ipswich_Town.svg'
+});
+mapTeamInfoChampinshipLeague.set('Norwich City FC', {
+  shortName: 'Norwich',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/8/8c/Norwich_City.svg'
+});
+mapTeamInfoChampinshipLeague.set('Wolverhampton Wanderers FC', {
+  shortName: 'Wolverhampton',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/ru/thumb/1/18/FC_Wolverhampton_Wanderers_Logo.svg/210px-FC_Wolverhampton_Wanderers_Logo.svg.png'
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (mapTeamInfoChampinshipLeague);
+
+/***/ }),
+/* 347 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const mapTeamInfoPrimierLeague = new Map();
+
+mapTeamInfoPrimierLeague.set('Chelsea FC', {
+  shortName: 'Chelsea',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg'
+});
+mapTeamInfoPrimierLeague.set('Liverpool FC', {
+  shortName: 'Liverpool',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg'
+});
+mapTeamInfoPrimierLeague.set('Tottenham Hotspur FC', {
+  shortName: 'Spurs',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg'
+});
+mapTeamInfoPrimierLeague.set('Manchester City FC', {
+  shortName: 'ManCity',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg'
+});
+mapTeamInfoPrimierLeague.set('Manchester United FC', {
+  shortName: 'ManU',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg'
+});
+mapTeamInfoPrimierLeague.set('Stoke City FC', {
+  shortName: 'Stoke',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/a/a3/Stoke_City.svg'
+});
+mapTeamInfoPrimierLeague.set('Leicester City FC', {
+  shortName: 'Foxes',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png'
+});
+mapTeamInfoPrimierLeague.set('Huddersfield Town', {
+  shortName: 'Huddersfield',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Huddersfield_Town_A.F.C._logo.svg'
+});
+mapTeamInfoPrimierLeague.set('West Bromwich Albion FC', {
+  shortName: 'West Bromwich',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg'
+});
+mapTeamInfoPrimierLeague.set('Newcastle United FC', {
+  shortName: 'Newcastle',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/5/56/Newcastle_United_Logo.svg'
+});
+mapTeamInfoPrimierLeague.set('AFC Bournemouth', {
+  shortName: 'Bournemouth',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/de/4/41/Afc_bournemouth.svg'
+});
+mapTeamInfoPrimierLeague.set('Swansea City FC', {
+  shortName: 'Swans',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/a/ab/Swansea_City_Logo.svg'
+});
+mapTeamInfoPrimierLeague.set('Brighton & Hove Albion', {
+  shortName: 'Brighton',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_&_Hove_Albion_logo.svg'
+});
+mapTeamInfoPrimierLeague.set('West Ham United FC', {
+  shortName: 'West Ham',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/e/e0/West_Ham_United_FC.svg'
+});
+mapTeamInfoPrimierLeague.set('Southampton FC', {
+  shortName: 'Southampton',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/c/c9/FC_Southampton.svg'
+});
+mapTeamInfoPrimierLeague.set('Burnley FC', {
+  shortName: 'Burnley',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/0/02/Burnley_FC_badge.png'
+});
+mapTeamInfoPrimierLeague.set('Everton FC', {
+  shortName: 'Everton',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/f/f9/Everton_FC.svg'
+});
+mapTeamInfoPrimierLeague.set('Watford FC', {
+  shortName: 'Watford',
+  crestUrl: 'https://upload.wikimedia.org/wikipedia/en/e/e2/Watford.svg'
+});
+mapTeamInfoPrimierLeague.set('Crystal Palace FC', {
+  shortName: 'Crystal',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/de/b/bf/Crystal_Palace_F.C._logo_(2013).png'
+});
+mapTeamInfoPrimierLeague.set('Arsenal FC', {
+  shortName: 'Arsenal',
+  crestUrl: 'http://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg'
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (mapTeamInfoPrimierLeague);
+
+/***/ }),
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(346);
+var content = __webpack_require__(349);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -37532,7 +37837,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(348)(content, options);
+var update = __webpack_require__(351)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -37564,21 +37869,21 @@ if(false) {
 }
 
 /***/ }),
-/* 346 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(347)(false);
+exports = module.exports = __webpack_require__(350)(false);
 // imports
 
 
 // module
-exports.push([module.i, "@font-face{font-family:Khmer UI;src:url(\"/src/fonts/KhmerUIb.ttf\") format(\"truetype\");font-weight:700;font-style:normal}@font-face{font-family:Lobster;src:url(\"/src/fonts/Lobster.ttf\") format(\"truetype\");font-weight:400;font-style:normal}.wrapper{width:540px;height:555px;padding:2px;background:#e8e6e6}.header{background:#e50f0f;padding:15px 0 15px 8px}.header__title{line-height:.75;color:#fff;font-family:Calibri;font-size:24px}.footer{display:flex;justify-content:flex-end;align-items:center;margin:15px 25px 15px 0}.footer__title a{text-decoration:none;color:#2f2f2f}.footer__title .title__powered{font-weight:700;font-family:Kartika,sans-serif;font-style:italic;color:#2f2f2f;font-size:15px;margin-right:5px}.footer__title .title__betting{margin-right:2px;font-family:Khmer UI;font-weight:700;text-transform:uppercase;font-size:15px}.footer__title .title__jam{font-family:Lobster;text-transform:lowercase;font-size:15px}.match{justify-content:space-between;padding:25px 30px 25px 0;border-top:1px solid #babbba;margin:0 15px 0 5px;font-family:Calibri;font-size:18px;color:#2f2f2f}.match,.match__team,.match__team .team__name{display:flex;align-items:center}.match__team .team__name img{width:25px;height:25px;margin-right:5px}.match__team .team__score{margin-left:10px}.match__match__date{display:flex;justify-content:center;align-items:center}.FullWidthTabs-contentHeight-2::-webkit-scrollbar-track{border-radius:5px;background:#e8e6e6}.FullWidthTabs-contentHeight-2::-webkit-scrollbar{width:13px;height:13px}.FullWidthTabs-contentHeight-2::-webkit-scrollbar-thumb{background-color:rgba(0,0,0,.2)}", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'Khmer UI';\n  src: url(\"/src/fonts/KhmerUIb.ttf\") format(\"truetype\");\n  font-weight: bold;\n  font-style: normal; }\n\n@font-face {\n  font-family: 'Lobster';\n  src: url(\"/src/fonts/Lobster.ttf\") format(\"truetype\");\n  font-weight: normal;\n  font-style: normal; }\n\n.wrapper {\n  width: 540px;\n  height: 555px;\n  padding: 2px;\n  background: #e8e6e6; }\n\n.header {\n  background: #e50f0f;\n  padding: 15px 0px 15px 8px; }\n  .header__title {\n    line-height: 0.75;\n    color: #fff;\n    font-family: 'Calibri';\n    font-size: 24px; }\n\n.footer {\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  margin: 15px 25px 15px 0px; }\n  .footer__title a {\n    text-decoration: none;\n    color: #2f2f2f; }\n  .footer__title .title__powered {\n    font-weight: bold;\n    font-family: 'Kartika',sans-serif;\n    font-style: italic;\n    color: #2f2f2f;\n    font-size: 15px;\n    margin-right: 5px; }\n  .footer__title .title__betting {\n    margin-right: 2px;\n    font-family: 'Khmer UI';\n    font-weight: bold;\n    text-transform: uppercase;\n    font-size: 15px; }\n  .footer__title .title__jam {\n    font-family: 'Lobster';\n    text-transform: lowercase;\n    font-size: 15px; }\n\n.match {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  padding: 25px 5px 25px 0px;\n  border-top: 1px solid #babbba;\n  margin: 0px 15px 0px 5px;\n  font-family: 'Calibri';\n  font-size: 18px;\n  color: #2f2f2f; }\n  .match__team {\n    display: flex;\n    align-items: center;\n    width: 33%; }\n    .match__team .team__name {\n      display: flex;\n      align-items: center; }\n      .match__team .team__name img {\n        width: 25px;\n        margin-right: 5px; }\n    .match__team .team__score {\n      padding-left: 20px;\n      font-weight: bold; }\n  .match__date {\n    width: 25%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    text-align: center; }\n\n.FullWidthTabs-contentHeight-2::-webkit-scrollbar-track {\n  border-radius: 5px;\n  background: #e8e6e6; }\n\n.FullWidthTabs-contentHeight-2::-webkit-scrollbar {\n  width: 13px;\n  height: 13px; }\n\n.FullWidthTabs-contentHeight-2::-webkit-scrollbar-thumb {\n  background-color: rgba(0, 0, 0, 0.2); }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 347 */
+/* 350 */
 /***/ (function(module, exports) {
 
 /*
@@ -37660,7 +37965,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 348 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -37726,7 +38031,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(349);
+var	fixUrls = __webpack_require__(352);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -38042,7 +38347,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 349 */
+/* 352 */
 /***/ (function(module, exports) {
 
 
@@ -38138,3 +38443,4 @@ module.exports = function (css) {
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=bundle.js.map

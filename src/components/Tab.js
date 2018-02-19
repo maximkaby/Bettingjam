@@ -68,9 +68,20 @@ class FullWidthTabs extends React.Component {
             textColor="secondary"
             fullWidth
           >
-            <Tab classes={{ label: classes.label }} label="UEFA Champions League" />
-            <Tab classes={{ label: classes.label }} label="Premier League" />
-            <Tab classes={{ label: classes.label }} label="Championship" />
+            <Tab
+              classes={{ label: classes.label }}
+              label="UEFA Champions League"
+            />
+            <Tab
+              classes={{ label: classes.label }}
+              label="Premier League"
+              onClick={this.props.getPremier}
+            />
+            <Tab
+              classes={{ label: classes.label }}
+              label="Championship"
+              onClick={this.props.getChampionship}
+            />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -85,10 +96,14 @@ class FullWidthTabs extends React.Component {
             }) }
           </TabContainer>
           <TabContainer dir={theme.direction}>
-           Primier
+            { this.props.matches.map((value) => {
+              return <Match {...value} />;
+            }) }
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            Championship
+            { this.props.matches.map((value) => {
+              return <Match {...value} />;
+            }) }
           </TabContainer>
         </SwipeableViews>
       </div>
@@ -111,6 +126,17 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    getPremier() {
+      dispatch({ type: 'LOAD_DATA', league: 'Premier' });
+    },
+    getChampionship() {
+      dispatch({ type: 'LOAD_DATA', league: 'Championship' });
+    }
+  };
+}
+
 const UEFATab = withStyles(styles, { withTheme: true })(FullWidthTabs);
 
-export default connect(mapStateToProps)(UEFATab);
+export default connect(mapStateToProps, mapDispatchToProps)(UEFATab);

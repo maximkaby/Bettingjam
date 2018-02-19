@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 30px 25px 0px;
+  padding: 25px 5px 25px 0px;
   border-top: 1px solid rgb(186,187,186);
   margin:0px 15px 0px 5px;
   font-family: 'Calibri';
@@ -12,6 +12,7 @@
   &__team{
     display: flex;
     align-items: center;
+    width:33%;
 
     .team__name{
       display: flex;
@@ -19,19 +20,21 @@
       
       img{
         width: 25px;
-        height: 25px;
         margin-right: 5px;
       }
     }
     
     .team__score{
-      margin-left: 10px;
+      padding-left: 20px;
+      font-weight: bold;
     }
   }
 
-  &__match__date{
+  &__date{
+    width: 25%;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
   } 
 }
