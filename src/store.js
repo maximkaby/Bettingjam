@@ -11,39 +11,63 @@ function UEFAReducer(state = [], action) {
       return state;
   }
 }
-/* eslint-disable*/
+
+function PremierLeagueReducer(state = [], action) {
+  switch (action.type) {
+    case 'SHOW_PREMIER_MATCHES':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+function ChampionshipReducer(state = [], action) {
+  switch (action.type) {
+    case 'SHOW_CHAMPIONSHIP_MATCHES':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 const headers = {
   'X-AUTH-TOKEN': '03c2904a3f2f4bfcad3ce71c790b1043'
-}
+};
 
 const leagues = {
   UEFA: {
     id: 464,
-    data: UEFAteams
+    teamsList: UEFAteams,
   },
   Premier: {
     id: 445,
-    data: primierLeague
+    teamsList: primierLeague,
   },
   Championship: {
     id: 446,
-    data: championshipTeams
+    teamsList: championshipTeams,
   }
-}
+};
 
+/* eslint-disable*/
 const UEFALoadMiddleware = store => next => action => {
   const result = next(action);
   switch (action.type) {
     case 'LOAD_DATA': 
-      fetch(`//api.football-data.org/v1/competitions/${leagues[action.league].id}`, {
+      if(leagues[action.league].isDownloaded) {
+        store.dispatch({
+          type:'GET_TEAM_LOGOS', 
+          payload: leagues[action.league].matches, league: action.league 
+        });
+      }
+      fetch(`http://api.football-data.org/v1/competitions/${leagues[action.league].id}`, {
         headers
       })
       .then((res) => {
-        console.log(12);
         return res.json();
       })
       .then((res) => {
-        console.log(res);
+        leagues[action.league].isDownloaded = true;
         store.dispatch({ 
           type: 'GET_CURRENT_MATCHDAY',
           payload: { 
@@ -52,29 +76,38 @@ const UEFALoadMiddleware = store => next => action => {
             league: action.league 
           }
         });
-    });
-    break;
+      });
+      break;
 
     case 'GET_CURRENT_MATCHDAY':
-      console.log(action);
-      fetch(`//api.football-data.org/v1/competitions/${action.payload.id}/fixtures?matchday=${action.payload.matchday}`,{
+      fetch(`http://api.football-data.org/v1/competitions/${action.payload.id}/fixtures?matchday=${action.payload.matchday}`,{
         headers
       })
       .then((res) => {
         return res.json();
       })
       .then((res) => {
-        console.log(res);
+        leagues[action.payload.league].matches = res;
         store.dispatch({ type:'GET_TEAM_LOGOS', payload: res, league: action.payload.league })
       });
       break;
+
     case 'GET_TEAM_LOGOS':
+      action.league === 'UEFA' ? 
       store.dispatch({ 
         type: 'SHOW_UEFA_MATCHES', 
-        payload: insertLogosHref(action.payload.fixtures, leagues[action.league].data) 
-      });
-      // });
+        payload: insertLogosHref(action.payload.fixtures, leagues[action.league].teamsList) 
+      }) : (action.league === 'Premier' ? 
+      store.dispatch({ 
+        type: 'SHOW_PREMIER_MATCHES', 
+        payload: insertLogosHref(action.payload.fixtures, leagues[action.league].teamsList) 
+      }) :
+      store.dispatch({ 
+        type: 'SHOW_CHAMPIONSHIP_MATCHES', 
+        payload: insertLogosHref(action.payload.fixtures, leagues[action.league].teamsList) 
+      }));
       break;
+
     default:
       return store;
   }
@@ -140,7 +173,6 @@ const dataLoadMiddleware = store => next => action => {
 };
 
 function insertLogosHref(matches, teams){
-  console.log(matches, teams);
   return matches.map((value) => {
     let awayTeam = teams.get(value.awayTeamName);
     let homeTeam = teams.get(value.homeTeamName);
@@ -155,7 +187,9 @@ function insertLogosHref(matches, teams){
 }
 
 const reducer = combineReducers({
-  UEFA: UEFAReducer
+  UEFA: UEFAReducer,
+  Premier: PremierLeagueReducer,
+  Championship: ChampionshipReducer
 });
 
 const store = createStore(

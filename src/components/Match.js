@@ -13,8 +13,6 @@ function getCorrectDate(date, goals) {
 export default class Match extends Component {
   render() {
     const {
-      homeTeamName = '',
-      awayTeamName = '',
       result: { goalsHomeTeam, goalsAwayTeam },
       date,
       homeTeamLogo = '',
@@ -22,7 +20,6 @@ export default class Match extends Component {
       awayTeamShortName = '../src/images/default-team-logo.png',
       homeTeamShortName = '../src/images/default-team-logo.png'
     } = this.props;
-    console.log(this.props);
 
     return (
       <div className="match">

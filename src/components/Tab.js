@@ -57,7 +57,6 @@ class FullWidthTabs extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    console.log(this.props.matches, 'qwe');
     return (
       <div className={classes.root}>
         <AppBar position="static" color="default" classes={{ root: classes.root }}>
@@ -71,6 +70,7 @@ class FullWidthTabs extends React.Component {
             <Tab
               classes={{ label: classes.label }}
               label="UEFA Champions League"
+              onClick={this.props.getUEFA}
             />
             <Tab
               classes={{ label: classes.label }}
@@ -91,18 +91,18 @@ class FullWidthTabs extends React.Component {
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction}>
-            { this.props.matches.map((value) => {
-              return <Match {...value} />;
+            { this.props.UEFAMatches.map((value, index) => {
+              return <Match key={index} {...value} />;
             }) }
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            { this.props.matches.map((value) => {
-              return <Match {...value} />;
+            { this.props.PremierMatches.map((value, index) => {
+              return <Match key={index} {...value} />;
             }) }
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            { this.props.matches.map((value) => {
-              return <Match {...value} />;
+            { this.props.Championship.map((value, index) => {
+              return <Match key={index} {...value} />;
             }) }
           </TabContainer>
         </SwipeableViews>
@@ -112,7 +112,9 @@ class FullWidthTabs extends React.Component {
 }
 
 FullWidthTabs.defaultProps = {
-  matches: []
+  UEFAMatches: [],
+  PremierMatches: [],
+  Championship: []
 };
 
 FullWidthTabs.propTypes = {
@@ -122,7 +124,9 @@ FullWidthTabs.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    matches: state.UEFA,
+    UEFAMatches: state.UEFA,
+    PremierMatches: state.Premier,
+    Championship: state.Championship
   };
 }
 
@@ -133,6 +137,9 @@ function mapDispatchToProps(dispatch) {
     },
     getChampionship() {
       dispatch({ type: 'LOAD_DATA', league: 'Championship' });
+    },
+    getUEFA() {
+      dispatch({ type: 'LOAD_DATA', league: 'UEFA' });
     }
   };
 }

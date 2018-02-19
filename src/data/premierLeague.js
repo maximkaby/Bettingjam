@@ -10,7 +10,7 @@ mapTeamInfoPrimierLeague.set('Liverpool FC', {
   crestUrl: 'http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg'
 });
 mapTeamInfoPrimierLeague.set('Tottenham Hotspur FC', {
-  shortName: 'Spurs',
+  shortName: 'Tottenham',
   crestUrl: 'http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg'
 });
 mapTeamInfoPrimierLeague.set('Manchester City FC', {
@@ -18,7 +18,7 @@ mapTeamInfoPrimierLeague.set('Manchester City FC', {
   crestUrl: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg'
 });
 mapTeamInfoPrimierLeague.set('Manchester United FC', {
-  shortName: 'ManU',
+  shortName: 'ManUtd',
   crestUrl: 'http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg'
 });
 mapTeamInfoPrimierLeague.set('Stoke City FC', {
@@ -26,7 +26,7 @@ mapTeamInfoPrimierLeague.set('Stoke City FC', {
   crestUrl: 'http://upload.wikimedia.org/wikipedia/de/a/a3/Stoke_City.svg'
 });
 mapTeamInfoPrimierLeague.set('Leicester City FC', {
-  shortName: 'Foxes',
+  shortName: 'Leicester',
   crestUrl: 'http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png'
 });
 mapTeamInfoPrimierLeague.set('Huddersfield Town', {
@@ -46,7 +46,7 @@ mapTeamInfoPrimierLeague.set('AFC Bournemouth', {
   crestUrl: 'https://upload.wikimedia.org/wikipedia/de/4/41/Afc_bournemouth.svg'
 });
 mapTeamInfoPrimierLeague.set('Swansea City FC', {
-  shortName: 'Swans',
+  shortName: 'Swansea',
   crestUrl: 'http://upload.wikimedia.org/wikipedia/de/a/ab/Swansea_City_Logo.svg'
 });
 mapTeamInfoPrimierLeague.set('Brighton & Hove Albion', {
