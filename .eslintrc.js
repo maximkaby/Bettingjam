@@ -26,7 +26,9 @@ module.exports = {
         "arrow-body-style": 0,
         "react/forbid-prop-types": 0,
         "eol-last": 0,
-        "react/no-array-index-key": 0
+        "react/no-array-index-key": 0,
+        "class-methods-use-this": 0,
+        "quote-props": 0
     },
     "parserOptions": {
         "ecmaVersion": 6,

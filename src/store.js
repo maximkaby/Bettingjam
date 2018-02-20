@@ -114,64 +114,6 @@ const UEFALoadMiddleware = store => next => action => {
   return result;
 }
 
-const dataLoadMiddleware = store => next => action => {
-  const result = next(action);
-  switch (action.type) {
-    case 'LOAD_DATA': 
-      fetch('//api.football-data.org/v1/competitions/445', {
-        headers
-      })
-        .then((res) => {
-          console.log(12);
-          return res.json();
-        })
-        .then((res) => {
-          console.log(res);
-          store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
-      });
-
-      fetch('//api.football-data.org/v1/competitions/446', {
-        headers
-      })
-        .then((res) => {
-          console.log(123)
-          return res.json();
-        })
-        .then((res) => {
-          console.log(res);
-          store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
-      });
-
-      fetch('//api.football-data.org/v1/competitions/464', {
-        headers
-      })
-        .then((res) => {
-          console.log(123)
-          return res.json();
-        })
-        .then((res) => {
-          console.log(res);
-          store.dispatch({ type: 'GET_CURRENT_MATCHDAY', payload: { matchday: res.currentMatchday, id: res.id }});
-      });
-      break;
-    case 'GET_CURRENT_MATCHDAY':
-      fetch(`http://api.football-data.org/v1/competitions/${action.payload.id}/fixtures?matchday=${action.payload.matchday}`,{
-        headers
-      })
-      .then((res) => {
-        return res.json();
-      })
-      .then((res) => {
-        console.log(res);
-        store.dispatch({ type:'SHOW_MATCHES' })
-      });
-      break;
-    default:
-      return store;
-  }
-  return result;
-};
-
 function insertLogosHref(matches, teams){
   return matches.map((value) => {
     let awayTeam = teams.get(value.awayTeamName);
